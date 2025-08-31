@@ -8,14 +8,14 @@ import React, { useMemo, useState } from "react";
  *
  * Rules:
  *  - Order of tenants: Basser, Berman, Galet, Leshinsky, Vale.
- *  - Duty occurs only on Wednesdays.
+ *  - Duty occurs only on Thursdays.
  *  - Print view shows ONLY a 12-week schedule, sized to ~¼ of a US Letter page with zebra stripes.
  */
 
 // ---------------------------
 // Tenant list
 // ---------------------------
-
+const THURSDAY = 4; 
 const TENANTS = [
   { id: "1", name: "Basser" },
   { id: "2", name: "Berman" },
@@ -67,11 +67,11 @@ function isSameDay(a, b) {
 }
 
 // ---------------------------
-// Assignment logic (Wednesdays only)
+// Assignment logic (Thursdays only)
 // ---------------------------
 
 function getAssigneeForDate(date) {
-  if (date.getDay() !== 3) return null; // 3 = Wednesday
+  if (date.getDay() !== THURSDAY) return null;
   const diff = Math.max(0, daysBetween(ROTATION_START, date));
   const weeks = Math.floor(diff / 7);
   const idx = weeks % TENANTS.length;
@@ -90,21 +90,21 @@ export default function BinDutyScheduler() {
   const today = toLocalMidnight(new Date());
 
   const upcoming = useMemo(() => {
-    // Next ~8 Wednesdays
+    // Next ~8 Thursdays
     let list = [];
     for (let i = 0; i < 60; i++) {
       const candidate = addDays(today, i);
-      if (candidate.getDay() === 3) list.push({ date: candidate, who: getAssigneeForDate(candidate) });
+    if (candidate.getDay() === THURSDAY) list.push({ date: candidate, who: getAssigneeForDate(candidate) });
     }
     return list;
   }, [today]);
 
   const twelveWeeks = useMemo(() => {
-    // Exactly 12 Wednesdays starting from this week
+    // Exactly 12 Thursdays starting from this week
     let list = [];
     for (let i = 0; i < 120; i++) {
       const candidate = addDays(today, i);
-      if (candidate.getDay() === 3) {
+       if (candidate.getDay() === THURSDAY) {
         list.push({ date: candidate, who: getAssigneeForDate(candidate) });
         if (list.length === 12) break;
       }
@@ -116,7 +116,7 @@ export default function BinDutyScheduler() {
     if (!selectedTenantId) return null;
     for (let i = 0; i < 365; i++) {
       const candidate = addDays(today, i);
-      if (candidate.getDay() !== 3) continue;
+      if (candidate.getDay() !== THURSDAY) continue;
       const who = getAssigneeForDate(candidate);
       if (who && who.id === selectedTenantId) return candidate;
     }
@@ -166,7 +166,7 @@ export default function BinDutyScheduler() {
           <header className="mb-6 sm:mb-10 flex items-center justify-between gap-4">
             <div>
               <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Building Bin Duty</h1>
-              <p className="text-slate-600">Bins are taken in every Wednesday</p>
+              <p className="text-slate-600">Bins are taken in every Thursday</p>
             </div>
             <div className="flex items-center gap-2">
               <button
@@ -210,7 +210,7 @@ export default function BinDutyScheduler() {
             <div className="sm:col-span-2 rounded-2xl bg-white p-5 shadow-sm border border-slate-100">
               <div className="flex items-center justify-between">
                 <div>
-                  <div className="text-xs uppercase tracking-wide text-slate-500">Next Wednesdays</div>
+                  <div className="text-xs uppercase tracking-wide text-slate-500">Next Thursdays</div>
                   <div className="text-sm text-slate-600">Upcoming schedule</div>
                 </div>
                 {selectedTenant && (
@@ -267,7 +267,7 @@ export default function BinDutyScheduler() {
         {/* ===== Print-only compact card (¼ page) ===== */}
         <section className="hidden print:block">
           <div className="print-card">
-            <div className="text-base font-semibold mb-2">Bin Duty — Next 12 Wednesdays</div>
+            <div className="text-base font-semibold mb-2">Bin Duty — Next 12 Thursdays</div>
             <table className="w-full text-xs border border-slate-200">
               <tbody>
                 {twelveWeeks.map(({ date, who }) => (
