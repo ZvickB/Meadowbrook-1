@@ -111,9 +111,6 @@ function PrintSheet({ twelveWeeks, today }) {
         <p style={{ fontSize: "15px", color: "#475569", margin: "0 0 4px" }}>
           12-Week Bin Duty Schedule
         </p>
-        <p style={{ fontSize: "12px", color: "#94a3b8", margin: 0 }}>
-          Printed {formatDate(today)}
-        </p>
       </div>
 
       {/* ── Tenant legend ── */}
