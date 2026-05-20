@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 
 const THURSDAY = 4;
 const TENANTS = [
@@ -307,7 +307,7 @@ function PrintSheet({ twelveWeeks, today }) {
 // ─────────────────────────────────────────────
 // PrintPreviewModal
 // ─────────────────────────────────────────────
-function PrintPreviewModal({ twelveWeeks, today, onClose }) {
+function PrintPreviewModal({ twelveWeeks, today, onClose, onPrint }) {
   return (
     <div
       style={{
@@ -336,7 +336,7 @@ function PrintPreviewModal({ twelveWeeks, today, onClose }) {
         </span>
         <div style={{ display: "flex", gap: "10px" }}>
           <button
-            onClick={() => window.print()}
+            onClick={onPrint}
             style={{
               backgroundColor: "#0ea5e9",
               color: "#fff",
@@ -401,8 +401,31 @@ export default function BinDutyScheduler() {
   const [monthCursor, setMonthCursor] = useState(toLocalMidnight(new Date()));
   const [search, setSearch] = useState("");
   const [showPreview, setShowPreview] = useState(false);
+  const printAreaRef = useRef(null);
 
   const today = toLocalMidnight(new Date());
+
+  const handlePrint = () => {
+    const html = printAreaRef.current?.innerHTML;
+    if (!html) return;
+    const win = window.open("", "_blank");
+    win.document.write(`<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @page { size: letter; margin: 0; }
+    body { margin: 0; padding: 0; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; box-sizing: border-box; }
+  </style>
+</head>
+<body>${html}</body>
+</html>`);
+    win.document.close();
+    win.focus();
+    win.onafterprint = () => win.close();
+    win.print();
+  };
 
   const upcoming = useMemo(() => {
     const list = [];
@@ -462,7 +485,7 @@ export default function BinDutyScheduler() {
       `}</style>
 
       {/* ── Always-in-DOM print area (hidden on screen, shown when printing) ── */}
-      <div id="print-area">
+      <div id="print-area" ref={printAreaRef}>
         <PrintSheet twelveWeeks={twelveWeeks} today={today} />
       </div>
 
@@ -472,6 +495,7 @@ export default function BinDutyScheduler() {
           twelveWeeks={twelveWeeks}
           today={today}
           onClose={() => setShowPreview(false)}
+          onPrint={handlePrint}
         />
       )}
 
