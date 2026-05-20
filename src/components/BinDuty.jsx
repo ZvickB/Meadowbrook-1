@@ -451,15 +451,18 @@ export default function BinDutyScheduler() {
     <>
       {/* ── Global print CSS ── */}
       <style>{`
+        @media screen {
+          #print-area { display: none; }
+        }
         @media print {
           @page { size: letter; margin: 0; }
-          #print-area { display: block !important; }
+          #print-area { display: block; }
           .screen-only { display: none !important; }
         }
       `}</style>
 
       {/* ── Always-in-DOM print area (hidden on screen, shown when printing) ── */}
-      <div id="print-area" style={{ display: "none" }}>
+      <div id="print-area">
         <PrintSheet twelveWeeks={twelveWeeks} today={today} />
       </div>
 
