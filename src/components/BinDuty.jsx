@@ -453,7 +453,6 @@ export default function BinDutyScheduler() {
       <style>{`
         @media print {
           @page { size: letter; margin: 0; }
-          body > * { display: none !important; }
           #print-area { display: block !important; }
           .screen-only { display: none !important; }
         }
