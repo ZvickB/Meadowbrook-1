@@ -3,10 +3,10 @@ import React, { useMemo, useRef, useState } from "react";
 const THURSDAY = 4;
 const TENANTS = [
   { id: "1", name: "Basser" },
-  { id: "2", name: "Berman" },
   { id: "3", name: "Galet" },
   { id: "4", name: "Leshinsky" },
   { id: "5", name: "Vale" },
+  // To add a new neighbor: add { id: "2", name: "NewName" } to this list
 ];
 
 const ROTATION_START = new Date(2025, 7, 13); // Aug 13, 2025
@@ -14,7 +14,7 @@ const ROTATION_START = new Date(2025, 7, 13); // Aug 13, 2025
 // One color palette entry per tenant (same index order as TENANTS)
 const PALETTE = [
   { bg: "#dbeafe", border: "#93c5fd", text: "#1e40af", pill: "#bfdbfe" }, // blue   — Basser
-  { bg: "#dcfce7", border: "#86efac", text: "#166534", pill: "#bbf7d0" }, // green  — Berman
+  { bg: "#dcfce7", border: "#86efac", text: "#166534", pill: "#bbf7d0" }, // green  — (vacant, id 2)
   { bg: "#fef9c3", border: "#fde047", text: "#854d0e", pill: "#fef08a" }, // yellow — Galet
   { bg: "#ede9fe", border: "#c4b5fd", text: "#5b21b6", pill: "#ddd6fe" }, // violet — Leshinsky
   { bg: "#fce7f3", border: "#f9a8d4", text: "#9d174d", pill: "#fbcfe8" }, // pink   — Vale
@@ -123,12 +123,15 @@ function PrintSheet({ twelveWeeks, today }) {
           marginBottom: "0.3in",
         }}
       >
-        {TENANTS.map((t, i) => {
-          const c = PALETTE[i];
+        {TENANTS.map((t) => {
+          const c = tenantColor(t.id);
           return (
             <span
               key={t.id}
               style={{
+                display: "inline-block",
+                width: "120px",
+                textAlign: "center",
                 backgroundColor: c.bg,
                 border: `2px solid ${c.border}`,
                 color: c.text,
@@ -253,6 +256,9 @@ function PrintSheet({ twelveWeeks, today }) {
                 >
                   <span
                     style={{
+                      display: "inline-block",
+                      width: "110px",
+                      textAlign: "center",
                       backgroundColor: c.pill,
                       color: c.text,
                       borderRadius: "999px",
@@ -582,6 +588,9 @@ export default function BinDutyScheduler() {
                       {who && c ? (
                         <span
                           style={{
+                            display: "inline-block",
+                            width: "100px",
+                            textAlign: "center",
                             backgroundColor: c.pill,
                             color: c.text,
                             borderRadius: "999px",
@@ -785,11 +794,25 @@ function CalendarGrid({ monthDate, getAssigneeForDate, highlightTenantId, tenant
                 )}
               </div>
               {who && c && (
-                <div
-                  className="mt-1 line-clamp-2"
-                  style={{ color: c.text, fontWeight: "600" }}
-                >
-                  {who.name}
+                <div className="mt-1 flex justify-center">
+                  <span
+                    style={{
+                      display: "inline-block",
+                      width: "100%",
+                      textAlign: "center",
+                      backgroundColor: c.pill,
+                      color: c.text,
+                      borderRadius: "999px",
+                      padding: "1px 4px",
+                      fontSize: "10px",
+                      fontWeight: "700",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {who.name}
+                  </span>
                 </div>
               )}
             </div>
