@@ -9,7 +9,7 @@ const TENANTS = [
   // To add a new neighbor: add { id: "2", name: "NewName" } to this list
 ];
 
-const ROTATION_START = new Date(2025, 7, 13); // Aug 13, 2025
+const ROTATION_START = new Date(2025, 7, 20); // Aug 20, 2025 (adjusted after removing Berman to keep rotation aligned)
 
 // One color palette entry per tenant (same index order as TENANTS)
 const PALETTE = [
