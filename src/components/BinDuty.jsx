@@ -2,7 +2,7 @@ import React, { useMemo, useRef, useState } from "react";
 
 const THURSDAY = 4;
 const TENANTS = [
-  { id: "1", name: "Aimes" },
+  { id: "1", name: "Ames" },
   { id: "2", name: "Basser" },
   { id: "3", name: "Galet" },
   { id: "4", name: "Grossman" },
@@ -13,7 +13,7 @@ const ROTATION_START = new Date(2025, 7, 13); // Aug 13, 2025 — anchored one w
 
 // One color palette entry per tenant (same index order as TENANTS)
 const PALETTE = [
-  { bg: "#dbeafe", border: "#93c5fd", text: "#1e40af", pill: "#bfdbfe" }, // blue   — Aimes
+  { bg: "#dbeafe", border: "#93c5fd", text: "#1e40af", pill: "#bfdbfe" }, // blue   — Ames
   { bg: "#dcfce7", border: "#86efac", text: "#166534", pill: "#bbf7d0" }, // green  — Basser
   { bg: "#fef9c3", border: "#fde047", text: "#854d0e", pill: "#fef08a" }, // yellow — Galet
   { bg: "#ede9fe", border: "#c4b5fd", text: "#5b21b6", pill: "#ddd6fe" }, // violet — Grossman
