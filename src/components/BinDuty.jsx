@@ -2,21 +2,21 @@ import React, { useMemo, useRef, useState } from "react";
 
 const THURSDAY = 4;
 const TENANTS = [
-  { id: "1", name: "Basser" },
+  { id: "1", name: "Aimes" },
+  { id: "2", name: "Basser" },
   { id: "3", name: "Galet" },
-  { id: "4", name: "Leshinsky" },
+  { id: "4", name: "Grossman" },
   { id: "5", name: "Vale" },
-  // To add a new neighbor: add { id: "2", name: "NewName" } to this list
 ];
 
-const ROTATION_START = new Date(2025, 7, 20); // Aug 20, 2025 (adjusted after removing Berman to keep rotation aligned)
+const ROTATION_START = new Date(2025, 7, 20); // Aug 20, 2025
 
 // One color palette entry per tenant (same index order as TENANTS)
 const PALETTE = [
-  { bg: "#dbeafe", border: "#93c5fd", text: "#1e40af", pill: "#bfdbfe" }, // blue   — Basser
-  { bg: "#dcfce7", border: "#86efac", text: "#166534", pill: "#bbf7d0" }, // green  — (vacant, id 2)
+  { bg: "#dbeafe", border: "#93c5fd", text: "#1e40af", pill: "#bfdbfe" }, // blue   — Aimes
+  { bg: "#dcfce7", border: "#86efac", text: "#166534", pill: "#bbf7d0" }, // green  — Basser
   { bg: "#fef9c3", border: "#fde047", text: "#854d0e", pill: "#fef08a" }, // yellow — Galet
-  { bg: "#ede9fe", border: "#c4b5fd", text: "#5b21b6", pill: "#ddd6fe" }, // violet — Leshinsky
+  { bg: "#ede9fe", border: "#c4b5fd", text: "#5b21b6", pill: "#ddd6fe" }, // violet — Grossman
   { bg: "#fce7f3", border: "#f9a8d4", text: "#9d174d", pill: "#fbcfe8" }, // pink   — Vale
 ];
 
