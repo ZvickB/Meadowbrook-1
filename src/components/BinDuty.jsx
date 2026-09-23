@@ -9,7 +9,7 @@ const TENANTS = [
   { id: "5", name: "Vale" },
 ];
 
-const ROTATION_START = new Date(2025, 7, 20); // Aug 20, 2025
+const ROTATION_START = new Date(2025, 7, 13); // Aug 13, 2025 — anchored one week earlier so Grossman is on duty this week
 
 // One color palette entry per tenant (same index order as TENANTS)
 const PALETTE = [
